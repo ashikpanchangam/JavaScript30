@@ -38,6 +38,19 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+// debouncing is used here to rate limit displayMatches()
+function debounce (fn, delay) {
+    var timer;
+    return function () {
+        var context = this,
+            args = arguments;
+        clearInterval(timer);
+        timer = setTimeout(function () {
+            fn.apply(context, args);
+        }, delay);
+    };
+}
+
 function displayMatches () {
   const matches = findMatches(this.value, cities);
   const html = matches.map(place => {
@@ -63,8 +76,8 @@ function displayMatches () {
 const searchInput = document.querySelector('.search');
 const suggestions = document.querySelector('.suggestions');
 
-searchInput.addEventListener('change', displayMatches);
-searchInput.addEventListener('keyup', displayMatches);
+searchInput.addEventListener('change', debounce(displayMatches, 500));
+searchInput.addEventListener('keyup', debounce(displayMatches, 500));
 
 </script>
 </body>
