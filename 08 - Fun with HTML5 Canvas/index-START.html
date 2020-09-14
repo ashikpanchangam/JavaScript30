@@ -7,6 +7,66 @@
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+  const canvas = document.getElementById('draw');
+  // get the 2d context
+  const ctx = canvas.getContext('2d');
+  
+  // by default, canvas dimensions are 800×800
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  // color to begin with
+  ctx.strokeStyle = '#BADA55';
+  // on line join should it be round
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.lineWidth = 50;
+
+  // when you move the mouse down, i.e, click and drag
+  let isDrawing = false;
+
+  // where you want the line to start from and end
+  let lastX = 0;
+  let lastY = 0;
+  let hue = 0;
+
+  function draw(e) {
+    // stop the function from running when they are not moused down
+    if(!isDrawing) {
+      return;
+    }
+    ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+
+    // lineWidth will be hue every time draw function gets trigerred
+    ctx.lineWidth = hue;
+    
+    // ctx is where we do all drawing for the canvas
+    ctx.beginPath();
+
+    // start from
+    ctx.moveTo(lastX, lastY);
+    // go to
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+    hue++;
+    // reset
+    if(hue > 360) {
+      hue = 0;
+    }
+  }
+
+  // A mousemove occurs before a mousedown event. So the
+  // lastX and lastY can be updated before dragging the mouse to draw
+  canvas.addEventListener('mousedown', (e) => {
+    isDrawing = true;
+    lastX = e.offsetX;
+    lastY = e.offsetY;
+  });
+
+  canvas.addEventListener('mousemove', draw);
+  canvas.addEventListener('mouseup', () => isDrawing = false);
+  canvas.addEventListener('mouseout', () => isDrawing = false);
 </script>
 
 <style>
