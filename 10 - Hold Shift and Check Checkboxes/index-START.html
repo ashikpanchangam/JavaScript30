@@ -96,6 +96,35 @@
   </div>
 
 <script>
+  const checkboxes = document.querySelectorAll('input[type=checkbox]');
+  
+  let lastChecked;
+
+  function handleCheckOfCheckBoxes(event) {
+    var inBetween = false;
+    // if the shiftKey is pressed and only if the checkbox is being checked
+    if(event.shiftKey && this.checked){
+
+      // loop over every checkbox
+      checkboxes.forEach(checkbox => {
+        if(checkbox === this || checkbox === lastChecked) {
+          inBetween = !inBetween;
+        }
+
+        // until it is true
+        if(inBetween === true) {
+          checkbox.checked = true;
+        }
+      });
+    }
+    lastChecked = this;
+  }
+  
+  checkboxes.forEach(checkbox => {
+    checkbox.addEventListener('click', handleCheckOfCheckBoxes);
+  })
+
+
 </script>
 </body>
 </html>
