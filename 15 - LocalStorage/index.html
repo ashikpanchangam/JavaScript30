@@ -65,7 +65,7 @@
     // This function is a classic example of delegation works
     function toggleDone(event) {
       // skip this unless it's an input
-      if(!e.target.matches('input'))
+      if(!event.target.matches('input'))
         return;
       
       let element = event.target;
