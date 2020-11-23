@@ -23,11 +23,18 @@
         <input type="text" name="item" placeholder="Item Name" required>
         <input type="submit" value="+ Add Item">
       </form>
+      <form class="select-unselect-all-items">
+        <button type="submit" id="select-all">Select All Item</button>
+        <button type="submit" id="uncheck-all">Uncheck All Items</button>
+      </form>
     </div>
 
   <script>
     const addItems = document.querySelector('.add-items');
     const itemsList = document.querySelector('.plates');
+
+    const selectAllButton = document.querySelector('#select-all');
+    const uncheckAllButton = document.querySelector('#uncheck-all');
 
     const items = JSON.parse(localStorage.getItem('items')) || [];
 
@@ -77,7 +84,26 @@
 
     }
 
+    function selectAllItems(event) {
+      items.forEach(item => {
+        item.done = true;
+      });
+      localStorage.setItem('items', JSON.stringify(items));
+      populateList(items, itemsList);
+    }
+
+    function uncheckAllItems(event) {
+      items.forEach(item => {
+        item.done = false;
+      });
+      localStorage.setItem('items', JSON.stringify(items));
+      populateList(items, itemsList);
+    }
+
     addItems.addEventListener('submit', addItem);
+
+    selectAllButton.addEventListener('click', selectAllItems);
+    uncheckAllButton.addEventListener('click', uncheckAllItems);
 
     // rather than listening on the input element in the list,
     // listen on the parent <ul> element -> Event Delegation
