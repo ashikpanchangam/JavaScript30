@@ -24,8 +24,8 @@
         <input type="submit" value="+ Add Item">
       </form>
       <form class="select-unselect-all-items">
-        <button type="submit" id="select-all">Select All Item</button>
-        <button type="submit" id="uncheck-all">Uncheck All Items</button>
+        <button type="button" id="select-all" onclick="selectAllItems()">Select All Item</button>
+        <button type="button" id="uncheck-all" onclick="uncheckAllItems()">Uncheck All Items</button>
       </form>
     </div>
 
@@ -101,9 +101,6 @@
     }
 
     addItems.addEventListener('submit', addItem);
-
-    selectAllButton.addEventListener('click', selectAllItems);
-    uncheckAllButton.addEventListener('click', uncheckAllItems);
 
     // rather than listening on the input element in the list,
     // listen on the parent <ul> element -> Event Delegation
