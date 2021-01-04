@@ -40,28 +40,23 @@
   }
 </style>
 
-<button></button>
+<button style="padding: 10px 20px;">Click Me!</button>
 <script>
   const divs = document.querySelectorAll('div');
-  const button = document.querySelector('button');
 
-  function logText(e) {
-    console.log(this.classList.value);
-    // e.stopPropagation(); // stop bubbling!
-    // console.log(this);
+  function print (e) {
+    // e.stopPropagation();
+    // console.log(this.classList.value);
+    console.log('Clicked!');
   }
 
-  divs.forEach(div => div.addEventListener('click', logText, {
-    capture: false,
-    once: true
+  divs.forEach(div => div.addEventListener('click', print, {
+    capture: false
   }));
 
-  button.addEventListener('click', () => {
-    console.log('Click!!!');
-  }, {
+  document.querySelector('button').addEventListener('click', print, {
     once: true
-  });
-
+  })
 </script>
 </body>
 </html>
